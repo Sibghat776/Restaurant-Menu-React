@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-function Main() {
+function Main({ btnText }) {
     const [myDishes, setMyDishes] = useState([]);
 
     async function allDishesAPI() {
         try {
-            const response = await axios.get("https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza");
+            const response = await axios.get(`https://forkify-api.herokuapp.com/api/v2/recipes?search=${btnText? btnText: "tikka"}`);
             setMyDishes(response.data.data.recipes);
         } catch (error) {
             console.error("Failed to fetch dishes:", error);
@@ -15,7 +15,7 @@ function Main() {
 
     useEffect(() => {
         allDishesAPI();
-    }, []);
+    }, [btnText]);
 
     return (
         <div style={{
@@ -43,7 +43,7 @@ function Main() {
                     }}
                 >
                     <div style={{
-                        width: "80%",
+                        width: "100%",
                         maxWidth: "270px",
                         height: "200px",
                         flexShrink: 0
@@ -65,6 +65,7 @@ function Main() {
                         color: "white",
                         display: "flex",
                         flexDirection: "column",
+                        textAlign: "start",
                         justifyContent: "center"
                     }}>
                         <h3 style={{ color: "Black", margin: "0 0 10px", textTransform: "uppercase", fontFamily: "inherit" }}>
